@@ -7,13 +7,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Instrument Sans"', 'sans-serif'],
+        sans: ['"Outfit"', 'sans-serif'],
+        display: ['"Syne"', 'sans-serif'],
       },
       colors: {
         background: '#0a0a0a',
         foreground: '#ffffff',
         accent: {
           DEFAULT: '#d4af37',
+          light: '#e5c158',
+          dark: '#b8860b',
           muted: 'rgba(212, 175, 55, 0.1)',
         },
         border: 'rgba(255, 255, 255, 0.1)',
@@ -21,15 +24,6 @@ export default {
           DEFAULT: '#a3a3a3',
           foreground: '#d4d4d4',
         },
-        gold: {
-          400: '#f1c40f',
-          500: '#d4af37',
-          600: '#b8860b',
-        },
-        whatsapp: {
-          DEFAULT: '#25D366',
-          dark: '#128C7E',
-        }
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

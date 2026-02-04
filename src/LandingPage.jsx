@@ -36,15 +36,15 @@ const Logo = ({ className = "", src = null }) => (
       <img 
         src={src} 
         alt="Ideias Efetivas - Fabrico de Reclamos Luminosos" 
-        className="h-10 w-auto object-contain brightness-0 opacity-[0.79] transition-all duration-300 group-hover:opacity-100" 
+        className="h-10 w-auto object-contain brightness-0 invert transition-all duration-300 group-hover:opacity-100 opacity-80" 
       />
     ) : (
-      <div className="flex items-baseline text-black opacity-[0.79] transition-all duration-300 group-hover:opacity-100">
-        <span className="text-2xl font-black tracking-tighter transform scale-y-125 origin-bottom inline-block">
-          IDEIAS
+      <div className="flex flex-col text-foreground leading-none">
+        <span className="text-2xl font-display font-black tracking-tighter uppercase">
+          Ideias
         </span>
-        <span className="text-2xl font-black tracking-tighter transform scale-y-125 origin-bottom inline-block">
-          EFETIVAS
+        <span className="text-2xl font-display font-black tracking-tighter uppercase text-accent">
+          Efetivas
         </span>
       </div>
     )}
@@ -86,13 +86,23 @@ const LandingPage = () => {
   };
 
   const fadeInUp = { 
-    hidden: { opacity: 0, y: 20 }, 
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } } 
+    hidden: { opacity: 0, y: 30 }, 
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } 
   }; 
 
-  const staggerContainer = { 
-    hidden: { opacity: 0 }, 
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } } 
+  const scaleIn = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
+
+  const parallaxHero = {
+    initial: { y: 0 },
+    animate: { y: -20, transition: { duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } }
+  };
+
+  const scaleOnHover = {
+    initial: { scale: 1 },
+    hover: { scale: 1.05, transition: { duration: 0.4, ease: "easeOut" } }
   };
 
   const servicesCategories = [
@@ -247,37 +257,34 @@ const LandingPage = () => {
     <div className="font-sans text-foreground bg-background selection:bg-accent/30 selection:text-accent"> 
        
       {/* --- HEADER --- */} 
-      <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-xl border-b border-border py-4' : 'bg-transparent py-8'}`}> 
+      <header className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-background/95 backdrop-blur-md border-b border-white/5 py-6' : 'bg-transparent py-10'}`}> 
         <nav className="container mx-auto px-6 flex justify-between items-center"> 
-          <a href="/" className="z-50">
+          <a href="/" className="z-50 flex items-center gap-4">
             <Logo src={myLogo} /> 
           </a>
            
-          <div className="hidden md:flex gap-12 items-center text-[11px] font-bold uppercase tracking-[0.2em]"> 
+          <div className="hidden md:flex gap-12 items-center text-[10px] font-black uppercase tracking-[0.4em]"> 
             {[
               { label: 'Serviços', id: 'servicos' },
               { label: 'Portfólio', id: 'portfolio' },
               { label: 'Sobre', id: 'empresa' },
-              { label: 'Contactos', id: 'contactos' }
+              { label: 'Contacto', id: 'contactos' }
             ].map((item) => (
-              <a key={item.id} href={`#${item.id}`} className="hover:text-accent transition-colors py-2 relative group">
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent transition-all duration-300 group-hover:w-full" />
+              <a key={item.id} href={`#${item.id}`} className="hover:text-accent transition-all duration-300 relative group overflow-hidden">
+                <span className="inline-block transition-transform duration-500 group-hover:-translate-y-full">{item.label}</span>
+                <span className="absolute top-0 left-0 inline-block transition-transform duration-500 translate-y-full group-hover:translate-y-0 text-accent">{item.label}</span>
               </a>
             ))}
           </div> 
 
           <div className="hidden md:flex items-center gap-8">
-            <a href="https://wa.me/351912345678" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent/80 transition-colors">
-              <MessageCircle size={20} />
-            </a>
-            <a href="#contactos" className="px-6 py-3 bg-foreground text-background font-bold text-[11px] uppercase tracking-widest hover:bg-accent hover:text-foreground transition-all duration-300">
-              Solicitar Orçamento
+            <a href="#contactos" className="border border-accent px-10 py-4 text-accent font-black text-[10px] uppercase tracking-[0.3em] transition-all duration-500 hover:bg-accent hover:text-background">
+              Orçamento
             </a>
           </div>
 
-          <button className="md:hidden z-50 p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}> 
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />} 
+          <button className="md:hidden z-50 p-2 text-foreground" onClick={() => setIsMenuOpen(!isMenuOpen)}> 
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />} 
           </button> 
         </nav> 
       </header> 
@@ -286,21 +293,24 @@ const LandingPage = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 z-40 bg-background md:hidden pt-32 px-10"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-background md:hidden flex flex-col items-center justify-center gap-12"
           >
-            <div className="flex flex-col gap-8 text-2xl font-bold uppercase tracking-widest">
-              {['Serviços', 'Portfólio', 'Sobre', 'Contactos'].map((item) => (
-                <a 
+            <div className="flex flex-col items-center gap-8 text-3xl font-black uppercase tracking-tighter">
+              {['Serviços', 'Portfólio', 'Sobre', 'Contactos'].map((item, idx) => (
+                <motion.a 
                   key={item} 
                   href={`#${item.toLowerCase()}`} 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                   onClick={() => setIsMenuOpen(false)}
                   className="hover:text-accent transition-colors"
                 >
                   {item}
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>
@@ -309,134 +319,183 @@ const LandingPage = () => {
 
       <main>
         {/* --- HERO SECTION --- */} 
-        <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"> 
+        <section className="relative h-screen flex items-center justify-center overflow-hidden bg-background"> 
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={staggerContainer}
-              className="max-w-6xl mx-auto"
+              variants={{
+                visible: { transition: { staggerChildren: 0.15 } }
+              }}
+              className="w-full"
             >
-              <motion.div variants={fadeInUp} className="mb-8 inline-flex items-center gap-3">
-                <div className="w-10 h-[1px] bg-accent" />
-                <span className="text-accent font-bold text-[11px] uppercase tracking-[0.4em]">
-                  Ideias Efetivas // 2026
+              <motion.div variants={fadeInUp} className="mb-12 flex items-center gap-6">
+                <div className="w-16 h-[2px] bg-accent" />
+                <span className="text-accent font-black text-[12px] uppercase tracking-[0.6em]">
+                  Ideias Efetivas // Creative Signage Lab
                 </span>
               </motion.div>
 
-              <motion.h1 variants={fadeInUp} className="text-[12vw] md:text-[8vw] font-black leading-[0.9] tracking-tighter uppercase mb-12">
-                Precisão <br />
-                <span className="text-accent italic">Visual.</span>
+              <motion.h1 variants={fadeInUp} className="text-[14vw] md:text-[11vw] font-display font-black leading-[0.8] tracking-tighter uppercase mb-16 max-w-[12ch]">
+                CRIAMOS <br />
+                <span className="text-accent italic">
+                  IMPACTO
+                </span> <br />
+                VISUAL.
               </motion.h1>
 
-              <div className="grid md:grid-cols-2 gap-12 items-end">
-                <motion.p variants={fadeInUp} className="text-muted-foreground text-lg md:text-xl font-medium leading-relaxed max-w-lg">
-                  Líderes no fabrico de sinalética de alta performance. Redefinimos a imagem corporativa através da inovação técnica e precisão artesanal.
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-16">
+                <motion.p variants={fadeInUp} className="text-muted-foreground text-lg md:text-2xl font-light leading-relaxed max-w-xl">
+                  Especialistas no fabrico de sinalética técnica de alta precisão. Redefinimos a presença física das marcas com soluções inovadoras e acabamentos de elite.
                 </motion.p>
                 
-                <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-6">
-                  <a href="#portfolio" className="inline-flex items-center justify-center px-10 py-5 bg-accent text-background font-bold text-[11px] uppercase tracking-widest hover:bg-foreground hover:text-background transition-all duration-300">
-                    Ver Projetos <ArrowRight size={16} className="ml-3" />
-                  </a>
-                  <a href="#servicos" className="inline-flex items-center justify-center px-10 py-5 border border-border text-foreground font-bold text-[11px] uppercase tracking-widest hover:bg-border transition-all duration-300">
-                    Nossas Soluções
+                <motion.div variants={fadeInUp} className="flex gap-4">
+                  <a href="#portfolio" className="group relative w-24 h-24 md:w-40 md:h-40 flex items-center justify-center rounded-full border border-white/10 hover:border-accent transition-all duration-700 overflow-hidden">
+                    <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
+                    <div className="relative z-10 flex flex-col items-center">
+                      <ArrowRight size={32} className="text-foreground group-hover:text-background group-hover:rotate-45 transition-all duration-700" />
+                      <span className="text-[8px] font-black uppercase tracking-widest mt-2 group-hover:text-background">Projetos</span>
+                    </div>
                   </a>
                 </motion.div>
               </div>
             </motion.div>
           </div>
 
-          {/* Background Video/Decoration */}
-          <div className="absolute inset-0 z-0 opacity-20">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
-            <video autoPlay muted loop playsInline crossOrigin="anonymous" className="w-full h-full object-cover grayscale">
-              <source src="https://assets.mixkit.co/videos/preview/mixkit-laser-cutting-machine-in-action-close-up-4541-large.mp4" type="video/mp4" />
-            </video>
+          {/* Background Elements */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background z-10" />
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.15, 0.2, 0.15]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0"
+            >
+              <video autoPlay muted loop playsInline crossOrigin="anonymous" className="w-full h-full object-cover grayscale brightness-50 contrast-125">
+                <source src="https://static.pexels.com/lib/videos/external/pexels-laser-cutting-3129957.mp4" type="video/mp4" />
+              </video>
+            </motion.div>
+            
+            {/* Grid Overlay */}
+            <div className="absolute inset-0 z-10 opacity-[0.03] pointer-events-none" 
+                 style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
           </div>
 
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-foreground/60 hover:text-accent transition-colors cursor-pointer"
+            transition={{ delay: 1.5 }}
+            className="absolute bottom-12 left-6 md:left-12 flex items-center gap-6"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] font-black">Scroll Down</span>
-            <ChevronDown size={20} className="animate-bounce" />
+            <div className="flex gap-4">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/40">Sintra, Portugal</span>
+            </div>
           </motion.div>
         </section>
 
         {/* --- STATS SECTION --- */}
-        <section className="py-24 border-y border-border bg-foreground/[0.02]">
+        <section className="py-32 border-b border-white/5 bg-background relative overflow-hidden">
           <div className="container mx-auto px-6">
             <h2 className="sr-only">Nossas Estatísticas</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-px md:bg-white/5">
               {[
-                { label: 'Anos de Experiência', value: '15+' },
-                { label: 'Projetos Concluídos', value: '2500+' },
-                { label: 'Clientes Globais', value: '450+' },
-                { label: 'M2 de Produção', value: '1200' }
+                { label: 'Anos de Know-how', value: '15' },
+                { label: 'Projetos de Elite', value: '2.5k' },
+                { label: 'Marcas Globais', value: '450' },
+                { label: 'Capacidade m2', value: '1.2k' }
               ].map((stat, i) => (
-                <div key={i} className="space-y-2">
-                  <div className="text-4xl md:text-5xl font-black text-accent">{stat.value}</div>
-                  <div className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">{stat.label}</div>
-                </div>
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-background p-12 flex flex-col items-center md:items-start group hover:bg-foreground/[0.02] transition-colors duration-500"
+                >
+                  <div className="text-6xl md:text-8xl font-display font-black text-foreground mb-4 tracking-tighter group-hover:text-accent transition-colors duration-500">
+                    {stat.value}
+                    <span className="text-accent text-2xl ml-1">+</span>
+                  </div>
+                  <div className="text-[10px] uppercase tracking-[0.4em] font-black text-muted-foreground">{stat.label}</div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
         {/* --- SERVICES SECTION --- */}
-        <section id="servicos" className="py-40 bg-background relative overflow-hidden">
+        <section id="servicos" className="py-40 bg-background relative">
           <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
-              <div className="max-w-2xl">
-                <span className="text-accent font-bold text-[11px] uppercase tracking-[0.4em] mb-4 block">Especialidades</span>
-                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">Soluções <br /> <span className="text-accent italic">Sob Medida.</span></h2>
-              </div>
-              <div className="flex flex-wrap gap-4 border-b border-border pb-2">
-                {servicesCategories.map((cat, idx) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(idx)}
-                    className={`pb-2 px-4 text-[11px] font-bold uppercase tracking-widest transition-all relative ${activeCategory === idx ? 'text-accent' : 'text-muted-foreground hover:text-foreground'}`}
-                  >
-                    {cat.title}
-                    {activeCategory === idx && (
-                      <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" />
-                    )}
-                  </button>
-                ))}
+            <div className="flex flex-col mb-32">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-6 mb-8"
+              >
+                <div className="w-12 h-[2px] bg-accent" />
+                <span className="text-accent font-black text-[11px] uppercase tracking-[0.6em]">Expertise</span>
+              </motion.div>
+              
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+                <h2 className="text-6xl md:text-9xl font-display font-black uppercase tracking-tighter leading-[0.85]">
+                  SOLUÇÕES <br />
+                  <span className="text-accent italic">TÉCNICAS.</span>
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {servicesCategories.map((cat, idx) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveCategory(idx)}
+                      className={`px-8 py-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 border ${activeCategory === idx ? 'bg-accent border-accent text-background' : 'bg-transparent border-white/10 text-muted-foreground hover:border-accent'}`}
+                    >
+                      {cat.title}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCategory}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border"
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5"
               >
                 {servicesCategories[activeCategory].items.map((item, i) => (
-                  <div key={i} className="group bg-background p-10 hover:bg-foreground/[0.02] transition-all duration-500">
-                    <div className="mb-10 group-hover:scale-110 transition-transform duration-500 origin-left">
-                      {item.icon}
+                  <div key={i} className="group bg-background p-16 md:p-24 hover:bg-foreground/[0.02] transition-all duration-700 relative overflow-hidden">
+                    <div className="absolute top-12 right-12 text-accent/10 text-8xl font-black italic group-hover:text-accent/20 transition-colors duration-700">
+                      0{i + 1}
                     </div>
-                    <h3 className="text-xl font-bold uppercase tracking-tight mb-4 group-hover:text-accent transition-colors">
-                      {item.name}
-                    </h3>
-                    <p className="text-muted-foreground text-sm font-medium leading-relaxed mb-8 min-h-[80px]">
-                      {item.desc}
-                    </p>
-                    <ul className="space-y-3">
-                      {item.features.map((feature, fidx) => (
-                        <li key={fidx} className="flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
-                          <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                    
+                    <div className="relative z-10">
+                      <div className="mb-12 inline-block p-6 rounded-full border border-white/5 group-hover:border-accent/30 transition-colors duration-700">
+                        {React.cloneElement(item.icon, { size: 32, className: "group-hover:scale-110 transition-transform duration-700" })}
+                      </div>
+                      
+                      <h3 className="text-3xl md:text-4xl font-display font-black uppercase tracking-tighter mb-8 group-hover:text-accent transition-colors duration-700">
+                        {item.name}
+                      </h3>
+                      
+                      <p className="text-muted-foreground text-lg font-medium leading-relaxed mb-12 max-w-md">
+                        {item.desc}
+                      </p>
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {item.features.map((feature, fidx) => (
+                          <div key={fidx} className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-foreground/60">
+                            <div className="w-1.5 h-1.5 bg-accent" />
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </motion.div>
@@ -450,10 +509,10 @@ const LandingPage = () => {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
               <div className="max-w-2xl">
                 <span className="text-accent font-bold text-[11px] uppercase tracking-[0.4em] mb-4 block">Portfólio</span>
-                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">Projetos de <br /> <span className="text-accent italic">Vanguarda.</span></h2>
+                <h2 className="text-5xl md:text-8xl font-display font-black uppercase tracking-tighter">Projetos de <br /> <span className="text-accent italic">Vanguarda.</span></h2>
               </div>
-              <a href="#" className="inline-flex items-center gap-4 text-background/60 hover:text-accent transition-colors text-[11px] font-bold uppercase tracking-widest">
-                Ver todos os projetos <ExternalLink size={16} />
+              <a href="#" className="inline-flex items-center gap-4 text-background/40 hover:text-accent transition-colors text-[10px] font-black uppercase tracking-widest">
+                Arquivo Completo <ExternalLink size={16} />
               </a>
             </div>
 
@@ -461,8 +520,8 @@ const LandingPage = () => {
               {portfolioProjects.map((project, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   className="group relative aspect-[4/5] overflow-hidden bg-background"
@@ -471,17 +530,72 @@ const LandingPage = () => {
                     src={project.image} 
                     alt={project.title} 
                     crossOrigin="anonymous"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 opacity-60 group-hover:opacity-100"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 opacity-40 group-hover:opacity-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-700" />
                   
-                  <div className="absolute inset-0 p-12 flex flex-col justify-end translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <span className="text-accent font-bold text-[10px] uppercase tracking-[0.3em] mb-2">{project.category}</span>
-                    <h4 className="text-foreground text-2xl font-black uppercase tracking-tighter mb-2">{project.title}</h4>
-                    <p className="text-muted-foreground text-[10px] uppercase tracking-widest font-bold">Cliente: {project.client}</p>
+                  <div className="absolute inset-0 p-12 flex flex-col justify-end translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                    <span className="text-accent font-black text-[10px] uppercase tracking-[0.4em] mb-4">{project.category}</span>
+                    <h4 className="text-foreground text-3xl font-display font-black uppercase tracking-tighter mb-4">{project.title}</h4>
+                    <p className="text-muted-foreground text-[10px] uppercase tracking-widest font-black">Cliente: {project.client}</p>
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- ABOUT SECTION --- */}
+        <section id="empresa" className="py-40 bg-background relative overflow-hidden">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-32 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+              >
+                <div className="w-12 h-[2px] bg-accent mb-8" />
+                <h2 className="text-6xl md:text-8xl font-display font-black uppercase tracking-tighter leading-none mb-12">
+                  PRECISÃO <br />
+                  <span className="text-accent italic">ABSOLUTA.</span>
+                </h2>
+                <div className="space-y-8 text-lg text-muted-foreground font-light leading-relaxed max-w-xl">
+                  <p>
+                    Com mais de 15 anos de experiência no mercado de sinalética técnica, a Ideias Efetivas combina artesanato tradicional com tecnologia de ponta.
+                  </p>
+                  <p>
+                    O nosso laboratório criativo em Sintra está equipado para responder aos desafios mais complexos, desde letras monobloco em aço inox polido a sistemas de iluminação LED de última geração.
+                  </p>
+                </div>
+                
+                <div className="mt-16 grid grid-cols-2 gap-12">
+                  <div>
+                    <div className="text-4xl font-display font-black text-foreground mb-2">Sintra</div>
+                    <div className="text-[10px] uppercase tracking-widest text-accent font-black">Sede & Produção</div>
+                  </div>
+                  <div>
+                    <div className="text-4xl font-display font-black text-foreground mb-2">Global</div>
+                    <div className="text-[10px] uppercase tracking-widest text-accent font-black">Instalação & Logística</div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+                className="relative aspect-square"
+              >
+                <div className="absolute inset-0 border border-accent/20 translate-x-8 translate-y-8" />
+                <img 
+                  src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Workshop" 
+                  className="w-full h-full object-cover grayscale brightness-50"
+                />
+                <div className="absolute inset-0 bg-accent/10 mix-blend-overlay" />
+              </motion.div>
             </div>
           </div>
         </section>
@@ -493,89 +607,65 @@ const LandingPage = () => {
               <div className="space-y-16">
                 <div className="max-w-xl">
                   <span className="text-accent font-bold text-[11px] uppercase tracking-[0.4em] mb-4 block">Contacto</span>
-                  <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-8">
-                    Vamos Criar o <br />
-                    <span className="text-accent italic">Futuro.</span>
+                  <h2 className="text-6xl md:text-9xl font-display font-black uppercase tracking-tighter leading-none mb-12">
+                    VAMOS <br />
+                    <span className="text-accent italic">CRIAR.</span>
                   </h2>
-                  <p className="text-muted-foreground text-lg font-medium leading-relaxed">
+                  <p className="text-muted-foreground text-xl font-light leading-relaxed">
                     Entre em contacto para uma consultoria técnica especializada. Transformamos a sua visão em sinalética de alta precisão.
                   </p>
                 </div>
 
-                <div className="grid sm:grid-cols-2 gap-12">
+                <div className="grid sm:grid-cols-2 gap-16">
                   <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Call us</span>
-                    <p className="text-xl font-bold">+351 912 345 678</p>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Contacto</span>
+                    <p className="text-2xl font-display font-bold">+351 912 345 678</p>
+                    <p className="text-muted-foreground text-sm">geral@ideiasefetivas.pt</p>
                   </div>
                   <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Email us</span>
-                    <p className="text-xl font-bold">geral@ideiasefetivas.pt</p>
-                  </div>
-                  <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Visit us</span>
-                    <p className="text-xl font-bold">Sintra, Portugal</p>
-                  </div>
-                  <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Follow us</span>
-                    <div className="flex gap-4">
-                      {[Instagram, Facebook, Linkedin].map((Icon, i) => (
-                        <a key={i} href="#" className="hover:text-accent transition-colors"><Icon size={20} /></a>
-                      ))}
-                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Localização</span>
+                    <p className="text-2xl font-display font-bold">Sintra, Portugal</p>
+                    <p className="text-muted-foreground text-sm">Zona Industrial, Armazém 4</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-foreground/[0.02] border border-border p-12 md:p-16">
-                <form onSubmit={handleFormSubmit} className="space-y-10">
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Nome / Empresa</label>
+              <div className="bg-foreground/[0.02] border border-white/5 p-12 md:p-20">
+                <form onSubmit={handleFormSubmit} className="space-y-12">
+                  <div className="space-y-8">
+                    <div className="space-y-2 relative group">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-focus-within:text-accent transition-colors">Nome / Empresa</label>
                       <input 
                         type="text" 
                         name="entity"
                         value={formData.entity}
                         onChange={handleInputChange}
                         required
-                        className="w-full bg-transparent border-b border-border py-4 text-foreground focus:border-accent outline-none transition-all font-medium"
+                        className="w-full bg-transparent border-b border-white/10 py-4 text-foreground focus:border-accent outline-none transition-all font-light text-lg"
                         placeholder="Insira o seu nome ou empresa"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email</label>
+                    <div className="space-y-2 relative group">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-focus-within:text-accent transition-colors">Email</label>
                       <input 
                         type="email" 
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full bg-transparent border-b border-border py-4 text-foreground focus:border-accent outline-none transition-all font-medium"
+                        className="w-full bg-transparent border-b border-white/10 py-4 text-foreground focus:border-accent outline-none transition-all font-light text-lg"
                         placeholder="email@exemplo.com"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Serviço</label>
-                      <select 
-                        name="service"
-                        value={formData.service}
-                        onChange={handleInputChange}
-                        className="w-full bg-transparent border-b border-border py-4 text-foreground focus:border-accent outline-none transition-all font-medium appearance-none"
-                      >
-                        <option value="LETRAS_INOX">Letras em Aço Inox</option>
-                        <option value="RECLAMOS_LUMINOSOS">Reclamos Luminosos</option>
-                        <option value="NEON_LED">Néon e LED</option>
-                        <option value="PAINEIS_PLACAS">Painéis e Placas</option>
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Mensagem</label>
+                    <div className="space-y-2 relative group">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground group-focus-within:text-accent transition-colors">Mensagem</label>
                       <textarea 
                         name="details"
                         value={formData.details}
                         onChange={handleInputChange}
                         rows="3" 
-                        className="w-full bg-transparent border-b border-border py-4 text-foreground focus:border-accent outline-none transition-all font-medium"
-                        placeholder="Descreva brevemente o seu projeto"
+                        className="w-full bg-transparent border-b border-white/10 py-4 text-foreground focus:border-accent outline-none transition-all font-light text-lg resize-none"
+                        placeholder="Descreva o seu projeto..."
                       ></textarea>
                     </div>
                   </div>
@@ -583,9 +673,10 @@ const LandingPage = () => {
                   <button 
                     type="submit"
                     disabled={formStatus === 'submitting'}
-                    className="w-full py-6 bg-accent text-background font-black text-[12px] uppercase tracking-[0.4em] hover:bg-foreground hover:text-background transition-all duration-500 flex items-center justify-center gap-4"
+                    className="group relative w-full py-8 bg-accent text-background font-black text-[12px] uppercase tracking-[0.4em] overflow-hidden transition-all duration-500 hover:bg-foreground hover:text-background"
                   >
-                    {formStatus === 'submitting' ? 'Enviando...' : formStatus === 'success' ? 'Enviado com Sucesso' : 'Enviar Pedido'}
+                    <span className="relative z-10">{formStatus === 'submitting' ? 'Enviando...' : formStatus === 'success' ? 'Enviado com Sucesso' : 'Solicitar Orçamento'}</span>
+                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                   </button>
                 </form>
               </div>
@@ -595,20 +686,50 @@ const LandingPage = () => {
       </main>
 
       {/* --- FOOTER --- */}
-      <footer className="bg-background py-20 border-t border-border">
+      <footer className="bg-background py-32 border-t border-white/5">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-            <Logo src={myLogo} />
-            
-            <div className="flex gap-12 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-              <a href="#servicos" className="hover:text-accent transition-colors">Serviços</a>
-              <a href="#portfolio" className="hover:text-accent transition-colors">Portfólio</a>
-              <a href="#empresa" className="hover:text-accent transition-colors">Sobre</a>
-              <a href="#contactos" className="hover:text-accent transition-colors">Contactos</a>
+          <div className="flex flex-col md:flex-row justify-between items-start gap-20">
+            <div className="max-w-sm">
+              <Logo src={myLogo} className="mb-8" />
+              <p className="text-muted-foreground text-sm font-light leading-relaxed mb-8">
+                Líderes no fabrico de sinalética técnica e luminosa. Qualidade superior, precisão absoluta e design de vanguarda.
+              </p>
+              <div className="flex gap-6">
+                {[Instagram, Facebook, Linkedin].map((Icon, i) => (
+                  <a key={i} href="#" className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 hover:border-accent hover:text-accent transition-all duration-300">
+                    <Icon size={18} />
+                  </a>
+                ))}
+              </div>
             </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-16 md:gap-32">
+              <div className="space-y-6">
+                <span className="text-[10px] font-black uppercase tracking-widest text-foreground">Menu</span>
+                <div className="flex flex-col gap-4 text-sm text-muted-foreground">
+                  <a href="#servicos" className="hover:text-accent transition-colors">Serviços</a>
+                  <a href="#portfolio" className="hover:text-accent transition-colors">Portfólio</a>
+                  <a href="#empresa" className="hover:text-accent transition-colors">Empresa</a>
+                  <a href="#contactos" className="hover:text-accent transition-colors">Contactos</a>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <span className="text-[10px] font-black uppercase tracking-widest text-foreground">Serviços</span>
+                <div className="flex flex-col gap-4 text-sm text-muted-foreground">
+                  <span className="hover:text-accent cursor-default">Letras Monobloco</span>
+                  <span className="hover:text-accent cursor-default">Reclamos Luminosos</span>
+                  <span className="hover:text-accent cursor-default">Néon LED Flex</span>
+                  <span className="hover:text-accent cursor-default">Sinalética Técnica</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-              © 2026 Ideias Efetivas. Todos os direitos reservados.
+          <div className="mt-32 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between gap-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">
+            <div>© 2026 Ideias Efetivas. Fabricado em Portugal.</div>
+            <div className="flex gap-8">
+              <a href="#" className="hover:text-foreground transition-colors">Privacidade</a>
+              <a href="#" className="hover:text-foreground transition-colors">Termos</a>
             </div>
           </div>
         </div>
