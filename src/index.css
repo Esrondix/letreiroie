@@ -1,17 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary: #1A1A1A;
-  --accent: #0052FF;
-  --secondary: #666666;
+  --background: #050505;
+  --accent: #00D1FF;
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  @apply bg-white text-primary antialiased;
+  font-family: 'Outfit', sans-serif;
+  @apply bg-background text-white antialiased overflow-x-hidden;
+}
+
+.glow-bg {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 209, 255, 0.05) 0%, transparent 50%);
+}
+
+.card-gradient {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
 }

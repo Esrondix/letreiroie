@@ -1,81 +1,63 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layout, Search, BarChart3, Rocket } from 'lucide-react';
+import { 
+  BarChart2, 
+  PenTool, 
+  TrendingUp, 
+  FileText, 
+  Users, 
+  Share2, 
+  Search, 
+  Target,
+  ArrowRight
+} from 'lucide-react';
 
 const services = [
-  {
-    title: "UI/UX Design",
-    desc: "Create beautiful and functional interfaces that your users will love to use.",
-    icon: <Layout size={32} />,
-    color: "bg-blue-500"
-  },
-  {
-    title: "SEO Optimization",
-    desc: "Rank higher on search engines and get more organic traffic to your site.",
-    icon: <Search size={32} />,
-    color: "bg-orange-500"
-  },
-  {
-    title: "Digital Marketing",
-    desc: "Scale your business with data-driven marketing strategies and ads.",
-    icon: <BarChart3 size={32} />,
-    color: "bg-purple-500"
-  },
-  {
-    title: "Development",
-    desc: "Build fast, secure and scalable web applications with modern tech.",
-    icon: <Rocket size={32} />,
-    color: "bg-green-500"
-  }
+  { name: 'Marketing Analysis', icon: <BarChart2 size={20} /> },
+  { name: 'Copy Writing', icon: <FileText size={20} /> },
+  { name: 'Research Solution', icon: <Search size={20} /> },
+  { name: 'Content Strategy', icon: <PenTool size={20} /> },
+  { name: 'Consulting Management', icon: <Users size={20} /> },
+  { name: 'Influencer Marketing', icon: <Share2 size={20} /> },
+  { name: 'Sales Forecasting', icon: <TrendingUp size={20} /> },
+  { name: 'Social Media Management', icon: <Target size={20} /> },
 ];
 
 export const Services = () => {
   return (
-    <section id="services" className="py-32 bg-white">
+    <section id="services" className="py-32 relative">
       <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.span 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-accent font-bold uppercase tracking-[0.3em] text-sm block mb-4"
-          >
-            What We Do
-          </motion.span>
-          <h2 className="text-4xl md:text-6xl font-black text-primary mb-6">
-            We provide the best digital services for you.
-          </h2>
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Service We Can <br /> Help You</h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, idx) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 max-w-5xl mx-auto">
+          {services.map((service, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 rounded-[2.5rem] bg-[#FAFAFA] hover:bg-white hover:shadow-2xl hover:shadow-gray-200/50 transition-all duration-500 group border border-transparent hover:border-gray-100"
+              transition={{ delay: i * 0.05 }}
+              className="flex items-center justify-between group cursor-pointer"
             >
-              <div className={`w-16 h-16 rounded-2xl ${service.color} flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                {service.icon}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-background transition-all duration-300">
+                  {service.icon}
+                </div>
+                <span className="font-bold text-white/80 group-hover:text-white transition-colors">{service.name}</span>
               </div>
-              <h3 className="text-2xl font-bold text-primary mb-4">{service.title}</h3>
-              <p className="text-secondary leading-relaxed mb-8">
-                {service.desc}
-              </p>
-              <a href="#" className="inline-flex items-center gap-2 font-bold text-primary hover:text-accent transition-colors">
-                Learn More <ArrowRight size={18} />
-              </a>
+              <ArrowRight size={16} className="text-white/20 group-hover:text-accent group-hover:translate-x-1 transition-all" />
             </motion.div>
           ))}
+          
+          <div className="flex items-center justify-between group cursor-pointer">
+            <div className="flex items-center gap-4">
+              <span className="font-bold text-white/40 underline underline-offset-8">Load more</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
-
-const ArrowRight = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M5 12h14m-7-7 7 7-7 7"/>
-  </svg>
-);

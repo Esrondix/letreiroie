@@ -1,30 +1,24 @@
 import React from "react";
 import { Header } from "./components/Header";
 import { Hero } from "./sections/Hero";
+import { AboutStats } from "./sections/AboutStats";
 import { Services } from "./sections/Services";
+import { Benefits } from "./sections/Benefits";
+import { Portfolio } from "./sections/Portfolio";
+import { ExtraSections } from "./sections/ExtraSections";
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Header />
       <main>
         <Hero />
+        <AboutStats />
         <Services />
+        <Benefits />
+        <Portfolio />
+        <ExtraSections />
       </main>
-      
-      <footer className="bg-primary text-white py-20">
-        <div className="container mx-auto px-6 text-center">
-          <div className="text-2xl font-black tracking-tighter mb-8">
-            DIGITAL<span className="text-accent">AGENCY</span>
-          </div>
-          <p className="text-gray-400 max-w-md mx-auto mb-12">
-            Helping you build your digital presence with passion and excellence since 2024.
-          </p>
-          <div className="text-sm text-gray-500">
-            © 2026 Digital Agency. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
