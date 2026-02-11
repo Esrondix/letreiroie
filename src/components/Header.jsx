@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { Logo } from './Logo';
-import myLogo from '../assets/logo_ideias_efetivas.png';
-
-const navItems = [
-  { label: 'Serviços', href: '#servicos' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Contacto', href: '#contacto' },
-];
+import { motion } from 'framer-motion';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,78 +12,76 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'Home', href: '#' },
+    { name: 'Services', href: '#services' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'About', href: '#about' },
+  ];
+
   return (
-    <>
-      <header 
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          isScrolled ? 'py-4 bg-background/80 backdrop-blur-xl border-b border-white/5' : 'py-8 bg-transparent'
-        }`}
-      >
-        <nav className="container mx-auto px-6 flex justify-between items-center">
-          <Logo src={myLogo} />
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-12">
-            {navItems.map((item) => (
-              <a 
-                key={item.label}
-                href={item.href}
-                className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/60 hover:text-accent transition-colors relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-            <a 
-              href="#contacto" 
-              className="px-8 py-3 border border-accent text-accent text-[10px] font-black uppercase tracking-[0.2em] hover:bg-accent hover:text-background transition-all duration-500"
-            >
-              Orçamento
-            </a>
+    <header 
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white shadow-sm py-4' : 'bg-transparent py-6'
+      }`}
+    >
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <a href="#" className="text-2xl font-black tracking-tighter flex items-center gap-2">
+          <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+            <div className="w-4 h-4 bg-white rounded-sm rotate-45" />
           </div>
+          DIGITAL<span className="text-accent">AGENCY</span>
+        </a>
 
-          {/* Mobile Toggle */}
-          <button 
-            className="md:hidden text-foreground p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-10">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name} 
+              href={link.href}
+              className="text-sm font-medium text-secondary hover:text-accent transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+          <button className="bg-primary text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-accent transition-all duration-300 shadow-lg shadow-primary/10">
+            Contact Us
           </button>
         </nav>
-      </header>
+
+        {/* Mobile Toggle */}
+        <button 
+          className="md:hidden p-2 text-primary"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[60] bg-background flex flex-col items-center justify-center gap-8"
-          >
-            <button 
-              className="absolute top-8 right-6 text-foreground p-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <X size={32} />
-            </button>
-            {navItems.map((item, idx) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
+      {isMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-full left-0 w-full bg-white border-t border-gray-100 p-6 md:hidden shadow-xl"
+        >
+          <div className="flex flex-col gap-6">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href}
+                className="text-lg font-medium text-secondary"
                 onClick={() => setIsMenuOpen(false)}
-                className="text-4xl font-display font-black uppercase tracking-tighter hover:text-accent transition-colors"
               >
-                {item.label}
-              </motion.a>
+                {link.name}
+              </a>
             ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            <button className="bg-accent text-white w-full py-4 rounded-xl font-bold">
+              Contact Us
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </header>
   );
 };

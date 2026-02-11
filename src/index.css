@@ -1,30 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Syne:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --primary: #1A1A1A;
+  --accent: #0052FF;
+  --secondary: #666666;
   scroll-behavior: smooth;
 }
 
 body {
-  @apply antialiased bg-background text-foreground overflow-x-hidden;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d4af37;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #b8860b;
+  font-family: 'Poppins', sans-serif;
+  @apply bg-white text-primary antialiased;
 }

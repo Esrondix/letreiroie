@@ -1,79 +1,71 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Box, Zap, Layers } from 'lucide-react';
+import { Layout, Search, BarChart3, Rocket } from 'lucide-react';
 
 const services = [
   {
-    title: "Letras Monobloco",
-    desc: "Aço inox polido, escovado ou retroiluminado para máxima elegância.",
-    icon: <Shield size={24} />,
-    tag: "Premium"
+    title: "UI/UX Design",
+    desc: "Create beautiful and functional interfaces that your users will love to use.",
+    icon: <Layout size={32} />,
+    color: "bg-blue-500"
   },
   {
-    title: "Reclamos Luminosos",
-    desc: "Sistemas LED de alta eficiência para visibilidade 24/7.",
-    icon: <Zap size={24} />,
-    tag: "Impacto"
+    title: "SEO Optimization",
+    desc: "Rank higher on search engines and get more organic traffic to your site.",
+    icon: <Search size={32} />,
+    color: "bg-orange-500"
   },
   {
-    title: "Néon LED Flex",
-    desc: "A estética vintage com tecnologia moderna e baixo consumo.",
-    icon: <Box size={24} />,
-    tag: "Tendência"
+    title: "Digital Marketing",
+    desc: "Scale your business with data-driven marketing strategies and ads.",
+    icon: <BarChart3 size={32} />,
+    color: "bg-purple-500"
   },
   {
-    title: "Sinalética Técnica",
-    desc: "Soluções estruturais e orientativas para grandes espaços.",
-    icon: <Layers size={24} />,
-    tag: "Precisão"
+    title: "Development",
+    desc: "Build fast, secure and scalable web applications with modern tech.",
+    icon: <Rocket size={32} />,
+    color: "bg-green-500"
   }
 ];
 
 export const Services = () => {
   return (
-    <section id="servicos" className="py-40 bg-background border-t border-white/5">
+    <section id="services" className="py-32 bg-white">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col mb-32">
+        <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.span 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-accent text-[10px] font-black uppercase tracking-[0.5em] mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-accent font-bold uppercase tracking-[0.3em] text-sm block mb-4"
           >
-            Expertise
+            What We Do
           </motion.span>
-          <h2 className="text-6xl md:text-9xl font-display font-black uppercase tracking-tighter leading-none">
-            SOLUÇÕES <br />
-            <span className="text-accent italic">TÉCNICAS.</span>
+          <h2 className="text-4xl md:text-6xl font-black text-primary mb-6">
+            We provide the best digital services for you.
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, idx) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group bg-background p-12 hover:bg-foreground/[0.02] transition-colors duration-700 relative overflow-hidden"
+              viewport={{ once: true }}
+              className="p-10 rounded-[2.5rem] bg-[#FAFAFA] hover:bg-white hover:shadow-2xl hover:shadow-gray-200/50 transition-all duration-500 group border border-transparent hover:border-gray-100"
             >
-              <div className="mb-12 text-accent group-hover:scale-110 transition-transform duration-700 inline-block">
+              <div className={`w-16 h-16 rounded-2xl ${service.color} flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                 {service.icon}
               </div>
-              <span className="block text-[8px] font-black uppercase tracking-[0.4em] text-accent/40 mb-4">
-                {service.tag}
-              </span>
-              <h3 className="text-2xl font-display font-black uppercase tracking-tighter mb-6 group-hover:text-accent transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground text-sm font-light leading-relaxed">
+              <h3 className="text-2xl font-bold text-primary mb-4">{service.title}</h3>
+              <p className="text-secondary leading-relaxed mb-8">
                 {service.desc}
               </p>
-              
-              <div className="absolute top-0 right-0 p-8 text-white/5 text-4xl font-display font-black group-hover:text-accent/10 transition-colors">
-                0{idx + 1}
-              </div>
+              <a href="#" className="inline-flex items-center gap-2 font-bold text-primary hover:text-accent transition-colors">
+                Learn More <ArrowRight size={18} />
+              </a>
             </motion.div>
           ))}
         </div>
@@ -81,3 +73,9 @@ export const Services = () => {
     </section>
   );
 };
+
+const ArrowRight = ({ size }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14m-7-7 7 7-7 7"/>
+  </svg>
+);
