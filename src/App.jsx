@@ -1,8 +1,11 @@
 import React from 'react';
 import { Header } from './components/Header';
 import { Hero } from './sections/Hero';
+import { Stats } from './sections/Stats';
 import { Services } from './sections/Services';
 import { Portfolio } from './sections/Portfolio';
+import { About } from './sections/About';
+import { Contact } from './sections/Contact';
 
 const App = () => {
   return (
@@ -10,9 +13,11 @@ const App = () => {
       <Header />
       <main>
         <Hero />
+        <Stats />
         <Services />
         <Portfolio />
-        {/* Outras seções virão aqui */}
+        <About />
+        <Contact />
       </main>
       
       {/* Footer minimalista em breve */}
