@@ -9,7 +9,7 @@ import { ExtraSections } from "./sections/ExtraSections";
 
 function App() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-white">
       <Header />
       <main>
         <Hero />

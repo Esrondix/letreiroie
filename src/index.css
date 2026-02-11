@@ -1,24 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #050505;
-  --accent: #00D1FF;
-  scroll-behavior: smooth;
+@theme {
+  --color-background: #050505;
+  --color-accent: #00D1FF;
+  --color-secondary: #111111;
+  --color-muted: #666666;
+  
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
 }
 
-body {
-  font-family: 'Outfit', sans-serif;
-  @apply bg-background text-white antialiased overflow-x-hidden;
+@layer base {
+  :root {
+    --background: #050505;
+    --accent: #00D1FF;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: white;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
 }
 
-.glow-bg {
-  background: radial-gradient(circle at 50% 50%, rgba(0, 209, 255, 0.05) 0%, transparent 50%);
-}
+@layer components {
+  .glow-bg {
+    background: radial-gradient(circle at 50% 50%, rgba(0, 209, 255, 0.05) 0%, transparent 50%);
+  }
 
-.card-gradient {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  .card-gradient {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  }
 }
