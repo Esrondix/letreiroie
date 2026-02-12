@@ -7,13 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#050505",
-        accent: "#00D1FF",
-        secondary: "#111111",
-        muted: "#666666",
+        background: "#07070B",
+        accent: "#0098B9",
+        text: "#F1F4FA",
+        secondary: "#111115",
+        muted: "#A0A5B1",
       },
       fontFamily: {
-        sans: ["Outfit", "sans-serif"],
+        sans: ["Poppins", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },

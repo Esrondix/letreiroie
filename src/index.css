@@ -1,37 +1,44 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-@theme {
-  --color-background: #050505;
-  --color-accent: #00D1FF;
-  --color-secondary: #111111;
-  --color-muted: #666666;
-  
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
-    --background: #050505;
-    --accent: #00D1FF;
+    --background: #07070B;
+    --accent: #0098B9;
+    --text: #F1F4FA;
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: var(--color-background);
-    color: white;
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    @apply bg-background text-text antialiased overflow-x-hidden;
+    font-family: 'Poppins', sans-serif;
   }
 }
 
 @layer components {
+  .glow-ellipse {
+    @apply absolute pointer-events-none;
+    background: rgba(0, 152, 185, 0.3);
+    filter: blur(250px);
+    z-index: 0;
+  }
+
   .glow-bg {
-    background: radial-gradient(circle at 50% 50%, rgba(0, 209, 255, 0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 50% 50%, rgba(0, 152, 185, 0.15) 0%, transparent 60%);
   }
 
   .card-gradient {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+    background: rgba(241, 244, 250, 0.05);
+    border: 1px solid rgba(241, 244, 250, 0.1);
+    backdrop-filter: blur(20px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(to bottom right, #F1F4FA 0%, #A0A5B1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }

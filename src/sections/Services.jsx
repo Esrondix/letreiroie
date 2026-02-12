@@ -25,13 +25,29 @@ const services = [
 
 export const Services = () => {
   return (
-    <section id="services" className="py-32 relative">
+    <section id="services" className="py-32 relative bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Service We Can <br /> Help You</h2>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl md:text-5xl font-medium mb-6 text-text tracking-[-2px] uppercase"
+          >
+            Serviços <span className="text-accent">Especializados</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-muted text-xl max-w-2xl mx-auto"
+          >
+            Desde o design à instalação, garantimos a melhor imagem para o seu negócio.
+          </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-12 max-w-6xl mx-auto">
           {services.map((service, i) => (
             <motion.div 
               key={i}
@@ -39,23 +55,17 @@ export const Services = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="flex items-center justify-between group cursor-pointer"
+              className="flex items-center justify-between group cursor-pointer p-4 rounded-2xl hover:bg-[rgba(241,244,250,0.03)] transition-colors"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-background transition-all duration-300">
+              <div className="flex items-center gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-[rgba(241,244,250,0.05)] border border-[rgba(241,244,250,0.1)] flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-background transition-all duration-300 backdrop-blur-md">
                   {service.icon}
                 </div>
-                <span className="font-bold text-white/80 group-hover:text-white transition-colors">{service.name}</span>
+                <span className="font-medium text-xl text-text group-hover:text-accent transition-colors">{service.name}</span>
               </div>
-              <ArrowRight size={16} className="text-white/20 group-hover:text-accent group-hover:translate-x-1 transition-all" />
+              <ArrowRight size={20} className="text-muted group-hover:text-accent group-hover:translate-x-1 transition-all" />
             </motion.div>
           ))}
-          
-          <div className="flex items-center justify-between group cursor-pointer">
-            <div className="flex items-center gap-4">
-              <span className="font-bold text-white/40 underline underline-offset-8">Load more</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
